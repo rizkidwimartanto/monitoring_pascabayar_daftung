@@ -91,7 +91,7 @@
                     <td>{{ $monitoring->target_carry_over }}</td>
                     <td>{{ $monitoring->target_harian }}</td>
                     <td>{{ $monitoring->realisasi }}</td>
-                    <td>{{$monitoring->target_harian / $monitoring->realisasi}}</td>
+                    <td></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#{{ $monitoring->id }}">
