@@ -96,11 +96,13 @@ class RekapPascaDaftungController extends Controller
         $request->validate([
             'target_carry_over' => 'nullable|string|max:255',
             'target_harian' => 'nullable|string|max:255',
+            'realisasi' => 'nullable|string|max:255',
         ]);
     
         $monitoring = RekapPascaDaftungModel::findOrFail($id);
         $monitoring->target_carry_over = $request->target_carry_over;
         $monitoring->target_harian = $request->target_harian;
+        $monitoring->realisasi = $request->realisasi;
         $monitoring->save();
     
         return redirect()->back()->with('success', 'Data berhasil diperbarui.');

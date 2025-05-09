@@ -82,6 +82,7 @@
                 <th>Target Carry Over</th>
                 <th>Target Harian</th>
                 <th>Realisasi</th>
+                <th>Pencapaian</th>
                 <th>Aksi</th>
             </tr>
             @foreach ($data as $monitoring)
@@ -90,6 +91,7 @@
                     <td>{{ $monitoring->target_carry_over }}</td>
                     <td>{{ $monitoring->target_harian }}</td>
                     <td>{{ $monitoring->realisasi }}</td>
+                    <td></td>
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#{{ $monitoring->id }}">
@@ -121,6 +123,11 @@
                                                 <label for="target_harian" class="form-label">Target Harian</label>
                                                 <input type="text" class="form-control" id="target_harian"
                                                     name="target_harian" value="{{ $monitoring->target_harian }}">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="realisasi" class="form-label">Realisasi</label>
+                                                <input type="text" class="form-control" id="realisasi"
+                                                    name="realisasi" value="{{ $monitoring->realisasi }}">
                                             </div>
                                         </div>
                                         <div class="modal-footer">
