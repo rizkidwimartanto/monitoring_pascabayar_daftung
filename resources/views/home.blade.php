@@ -47,8 +47,12 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="target_carry_over" class="form-label">Target Carry Over</label>
-                <input type="text" class="form-control" id="target_carry_over" name="target_carry_over" disabled>
+                <label for="target_bulanan" class="form-label">Target Bulanan</label>
+                <input type="text" class="form-control" id="target_bulanan" name="target_bulanan" disabled>
+            </div>
+            <div class="mb-3">
+                <label for="target_mingguan" class="form-label">Target Mingguan</label>
+                <input type="text" class="form-control" id="target_mingguan" name="target_mingguan" disabled>
             </div>
             <div class="mb-3">
                 <label for="target_harian" class="form-label">Target Harian</label>
@@ -57,36 +61,6 @@
             <div class="mb-3">
                 <label for="realisasi" class="form-label">Realisasi</label>
                 <input type="text" class="form-control" id="realisasi" name="realisasi">
-            </div>
-        </div>
-        <div class="container mx-auto mt-5">
-            <h2 class="text-center font-bold">Input Daftung UP3 Grobogan Tahun 2025</h2>
-            @csrf
-            <div class="mb-3">
-                <label for="unit_ulp_daftung" class="form-label">Unit ULP</label>
-                <select class="form-select" aria-label="Unit ULP" name="unit_ulp_daftung" id="unit_ulp_daftung">
-                    <option selected disabled>Pilih Unit ULP</option>
-                    <option value="ULP Demak">ULP Demak</option>
-                    <option value="ULP Tegowanu">ULP Tegowanu</option>
-                    <option value="ULP Purwodadi">ULP Purwodadi</option>
-                    <option value="ULP Wirosari">ULP Wirosari</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label for="daftung_pagi" class="form-label">Jumlah Daftung Pagi</label>
-                <input type="text" class="form-control" id="daftung_pagi" name="daftung_pagi">
-            </div>
-            <div class="mb-3">
-                <label for="cetak_pk_pagi" class="form-label">Jumlah Cetak PK Pukul 08.00</label>
-                <input type="text" class="form-control" id="cetak_pk_pagi" name="cetak_pk_pagi">
-            </div>
-            <div class="mb-3">
-                <label for="cetak_pk_siang" class="form-label">Jumlah Cetak PK Pukul 13.00</label>
-                <input type="text" class="form-control" id="cetak_pk_siang" name="cetak_pk_siang">
-            </div>
-            <div class="mb-3">
-                <label for="jumlah_peremajaan" class="form-label">Jumlah Peremajaan</label>
-                <input type="text" class="form-control" id="jumlah_peremajaan" name="jumlah_peremajaan">
             </div>
             <div class="d-grid gap-2">
                 <button class="btn btn-primary mb-4" type="submit">Kirim</button>
@@ -108,17 +82,20 @@
 
         const unitPascabayarSelect = document.getElementById('unit_ulp_pascabayar');
         const unitDaftungSelect = document.getElementById('unit_ulp_daftung');
-        const targetCarryOver = document.getElementById('target_carry_over');
+        const targetBulanan = document.getElementById('target_bulanan');
+        const targetMingguan = document.getElementById('target_mingguan');
         const targetHarian = document.getElementById('target_harian');
 
         unitPascabayarSelect.addEventListener('change', function() {
             const selectedUnit = this.value;
 
             if (dataTarget[selectedUnit]) {
-                targetCarryOver.value = dataTarget[selectedUnit].carry_over;
+                targetBulanan.value = dataTarget[selectedUnit].bulanan;
+                targetMingguan.value = dataTarget[selectedUnit].mingguan;
                 targetHarian.value = dataTarget[selectedUnit].harian;
             } else {
-                targetCarryOver.value = '';
+                targetBulanan.value = '';
+                targetMingguan.value = '';
                 targetHarian.value = '';
             }
 

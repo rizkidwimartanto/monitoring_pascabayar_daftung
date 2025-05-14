@@ -12,25 +12,25 @@ class RekapPascaDaftungController extends Controller
 
     public function index()
     {
-        $startOfMonth = Carbon::now()->startOfMonth()->toDateString();
-        $endOfMonth = Carbon::now()->endOfMonth()->toDateString();
-    
+        $tanggalSekarang = Carbon::now()->toDateString();
+
         $targetsRaw = DB::table('rekap_pascabayar_daftung')
-            ->whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            ->whereDate('created_at', $tanggalSekarang)
             ->get();
-    
+
         $targets = [];
         foreach ($targetsRaw as $target) {
             $targets[$target->unit_ulp_pascabayar] = [
-                'carry_over' => $target->target_carry_over,
+                'bulanan' => $target->target_bulanan,
+                'mingguan' => $target->target_mingguan,
                 'harian' => $target->target_harian,
             ];
         }
-    
+
         return view('home', compact('targets'));
     }
-    
-    
+
+
 
     public function getRekapData($unit)
     {
@@ -44,24 +44,43 @@ class RekapPascaDaftungController extends Controller
         return response()->json($data);
     }
 
-
     public function administrator(Request $request)
     {
-        $query = DB::table('rekap_pascabayar_daftung');
+        // Daftar unit yang ditampilkan
+        $unitList = ['ULP Demak', 'ULP Tegowanu', 'ULP Purwodadi', 'ULP Wirosari'];
 
-        // Filter berdasarkan rentang tanggal
+        // Jika ada filter tanggal
         if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween(DB::raw('DATE(created_at)'), [
-                $request->start_date,
-                $request->end_date
-            ]);
+            $data = DB::table('rekap_pascabayar_daftung')
+                ->select(
+                    'unit_ulp_pascabayar',
+                    DB::raw('SUM(realisasi) as total_realisasi'),
+                    DB::raw('MAX(target_bulanan) as target_bulanan'),
+                    DB::raw('MAX(target_mingguan) as target_mingguan'),
+                    DB::raw('MAX(target_harian) as target_harian')
+                )
+                ->whereIn('unit_ulp_pascabayar', $unitList)
+                ->whereBetween(DB::raw('DATE(created_at)'), [
+                    $request->start_date,
+                    $request->end_date
+                ])
+                ->groupBy('unit_ulp_pascabayar')
+                ->get();
+
+            $useGroup = true; // penanda untuk view
+        } else {
+            // Tampilkan semua data default (tanpa akumulasi)
+            $data = DB::table('rekap_pascabayar_daftung')
+                ->whereIn('unit_ulp_pascabayar', $unitList)
+                ->get();
+
+            $useGroup = false;
         }
 
-        $data = [
-            'data' => $query->get()
-        ];
-
-        return view('up3', $data);
+        return view('up3', [
+            'data' => $data,
+            'useGroup' => $useGroup
+        ]);
     }
 
     public function store(Request $request)
@@ -69,7 +88,8 @@ class RekapPascaDaftungController extends Controller
         // Validate the request
         $request->validate([
             'unit_ulp_pascabayar' => 'required|string|max:255',
-            'target_carry_over' => 'nullable|string|max:255',
+            'target_bulanan' => 'nullable|string|max:255',
+            'target_mingguan' => 'nullable|string|max:255',
             'target_harian' => 'nullable|string|max:255',
             'realisasi' => 'nullable|string|max:255',
             // 'persen_pencapaian' => 'nullable|string|max:255',
@@ -94,15 +114,17 @@ class RekapPascaDaftungController extends Controller
     public function edit(Request $request, $id)
     {
         $request->validate([
-            'target_carry_over' => 'nullable|string|max:255',
+            'target_bulanan' => 'nullable|string|max:255',
+            'target_mingguan' => 'nullable|string|max:255',
             'target_harian' => 'nullable|string|max:255',
         ]);
-    
+
         $monitoring = RekapPascaDaftungModel::findOrFail($id);
-        $monitoring->target_carry_over = $request->target_carry_over;
+        $monitoring->target_bulanan = $request->target_bulanan;
+        $monitoring->target_mingguan = $request->target_mingguan;
         $monitoring->target_harian = $request->target_harian;
         $monitoring->save();
-    
+
         return redirect()->back()->with('success', 'Data berhasil diperbarui.');
     }
     public function update(Request $request)
@@ -194,7 +216,7 @@ class RekapPascaDaftungController extends Controller
     public function getDataByTargerCarryOver($targer)
     {
         // Fetch data by targer carry over
-        $data = RekapPascaDaftungModel::where('targer_carry_over', $targer)->get();
+        $data = RekapPascaDaftungModel::where('targer_bulanan', $targer)->get();
         return response()->json($data);
     }
     public function getDataByUnitAndDate($unit, $startDate, $endDate)

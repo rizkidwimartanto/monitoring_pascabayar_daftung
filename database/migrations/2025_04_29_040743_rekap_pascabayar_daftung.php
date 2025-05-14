@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('rekap_pascabayar_daftung', function (Blueprint $table) {
             $table->id();
             $table->string('unit_ulp_pascabayar')->nullable();
-            $table->string('target_carry_over')->nullable();
+            $table->string('target_bulanan')->nullable();
+            $table->string('target_mingguan')->nullable();
             $table->string('target_harian')->nullable();
             $table->string('realisasi')->nullable();
             $table->string('persen_pencapaian')->nullable();

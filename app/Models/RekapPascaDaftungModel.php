@@ -9,7 +9,8 @@ class RekapPascaDaftungModel extends Model
     protected $table = 'rekap_pascabayar_daftung';
     protected $fillable = [
         'unit_ulp_pascabayar',
-        'target_carry_over',
+        'target_bulanan',
+        'target_mingguan',
         'target_harian',
         'realisasi',
         'persen_pencapaian',

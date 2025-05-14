@@ -31,7 +31,7 @@
             </div>
         </div>
     </nav>
-    <form action="{{route('rekap-pascadaftung.store')}}" method="POST" class="mt-5">
+    <form action="{{ route('rekap-pascadaftung.store') }}" method="POST" class="mt-5">
         <div class="container mx-auto mt-5">
             <h2 class="text-center font-bold">Input Pascabayar UP3 Grobogan Tahun 2025</h2>
             @csrf
@@ -46,8 +46,12 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="target_carry_over" class="form-label">Target Carry Over</label>
-                <input type="text" class="form-control" id="target_carry_over" name="target_carry_over">
+                <label for="target_bulanan" class="form-label">Target Bulanan</label>
+                <input type="text" class="form-control" id="target_bulanan" name="target_bulanan">
+            </div>
+            <div class="mb-3">
+                <label for="target_mingguan" class="form-label">Target Mingguan</label>
+                <input type="text" class="form-control" id="target_mingguan" name="target_mingguan">
             </div>
             <div class="mb-3">
                 <label for="target_harian" class="form-label">Target Harian</label>
@@ -79,20 +83,31 @@
         <table class="table table-hover table-bordered table-info mt-4">
             <tr>
                 <th>Unit ULP Pascabayar</th>
-                <th>Target Carry Over</th>
+                <th>Target Bulanan</th>
+                <th>Target Mingguan</th>
                 <th>Target Harian</th>
                 <th>Realisasi</th>
                 <th>Pencapaian</th>
-                <th>Aksi</th>
+                {{-- <th>Aksi</th> --}}
             </tr>
             @foreach ($data as $monitoring)
                 <tr>
                     <td>{{ $monitoring->unit_ulp_pascabayar }}</td>
-                    <td>{{ $monitoring->target_carry_over }}</td>
+                    <td>{{ $monitoring->target_bulanan }}</td>
+                    <td>{{ $monitoring->target_mingguan }}</td>
                     <td>{{ $monitoring->target_harian }}</td>
-                    <td>{{ $monitoring->realisasi }}</td>
-                    <td>{{number_format($monitoring->realisasi / $monitoring->target_harian * 100, 2, ',', '.') }}%</td>
                     <td>
+                        {{ $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi }}
+                    </td>
+                    <td>
+                        @php
+                            $realisasi = $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi;
+                            $targetHarian = $monitoring->target_harian;
+                        @endphp
+                        {{ $targetHarian > 0 ? number_format(($realisasi / $targetHarian) * 100, 2, ',', '.') . '%' : '0%' }}
+                    </td>
+
+                    {{-- <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#{{ $monitoring->id }}">
                             Edit
@@ -113,11 +128,10 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="mb-3">
-                                                <label for="target_carry_over" class="form-label">Target Carry
+                                                <label for="target_bulanan" class="form-label">Target Carry
                                                     Over</label>
-                                                <input type="text" class="form-control" id="target_carry_over"
-                                                    name="target_carry_over"
-                                                    value="{{ $monitoring->target_carry_over }}">
+                                                <input type="text" class="form-control" id="target_bulanan"
+                                                    name="target_bulanan" value="{{ $monitoring->target_bulanan }}">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="target_harian" class="form-label">Target Harian</label>
@@ -134,12 +148,12 @@
                                 </div>
                             </div>
                         </div>
-                    </td>
+                    </td> --}}
                 </tr>
             @endforeach
         </table>
     </div>
-    <div class="container">
+    {{-- <div class="container">
         <h2 class="text-center font-bold mt-5">Monitoring Daftung UP3 Grobogan Tahun 2025</h2>
         <table class="table table-hover table-bordered table-primary mt-4">
             <tr>
@@ -157,7 +171,7 @@
                 </tr>
             @endforeach
         </table>
-    </div>
+    </div> --}}
     @if (session('success'))
         <script>
             Swal.fire({
