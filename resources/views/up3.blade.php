@@ -118,58 +118,62 @@
                                 {{ $targetHarian > 0 ? number_format(($realisasi / $targetHarian) * 100, 2, ',', '.') . '%' : '0%' }}
                             </td>
                             <td>
-                                <a href="" style="cursor: pointer"
-                                    data-bs-target="#edit_pascabayar_{{ $monitoring->id }}" data-bs-toggle="modal"><i
-                                        class="fa-solid fa-pen-to-square fa-lg"></i></a>
-                                <div class="modal fade" id="edit_pascabayar_{{ $monitoring->id }}" tabindex="-1"
-                                    aria-labelledby="edit_pascabayar_label" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="edit_pascabayar_label">Edit Data
-                                                    Pascabayar</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                @if (!$useGroup)
+                                    <a href="" style="cursor: pointer"
+                                        data-bs-target="#edit_pascabayar_{{ $monitoring->id }}"
+                                        data-bs-toggle="modal"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                    <div class="modal fade" id="edit_pascabayar_{{ $monitoring->id }}"
+                                        tabindex="-1" aria-labelledby="edit_pascabayar_label" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="edit_pascabayar_label">Edit Data
+                                                        Pascabayar</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('rekap-pascadaftung.edit', $monitoring->id) }}"
+                                                    method="post">
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label for="target_bulanan" class="form-label">Target
+                                                                Bulanan</label>
+                                                            <input type="text" class="form-control"
+                                                                id="target_bulanan" name="target_bulanan"
+                                                                value="{{ $monitoring->target_bulanan }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="target_mingguan" class="form-label">Target
+                                                                Mingguan</label>
+                                                            <input type="text" class="form-control"
+                                                                id="target_mingguan" name="target_mingguan"
+                                                                value="{{ $monitoring->target_mingguan }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="target_harian" class="form-label">Target
+                                                                Harian</label>
+                                                            <input type="text" class="form-control"
+                                                                id="target_harian" name="target_harian"
+                                                                value="{{ $monitoring->target_harian }}">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="realisasi"
+                                                                class="form-label">Realisasi</label>
+                                                            <input type="text" class="form-control" id="realisasi"
+                                                                name="realisasi"
+                                                                value="{{ $monitoring->realisasi }}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success">Submit</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <form action="{{ route('rekap-pascadaftung.edit', $monitoring->id) }}"
-                                                method="post">
-                                                @method('PUT')
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <div class="mb-3">
-                                                        <label for="target_bulanan" class="form-label">Target
-                                                            Bulanan</label>
-                                                        <input type="text" class="form-control"
-                                                            id="target_bulanan" name="target_bulanan"
-                                                            value="{{ $monitoring->target_bulanan }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="target_mingguan" class="form-label">Target
-                                                            Mingguan</label>
-                                                        <input type="text" class="form-control"
-                                                            id="target_mingguan" name="target_mingguan"
-                                                            value="{{ $monitoring->target_mingguan }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="target_harian" class="form-label">Target
-                                                            Harian</label>
-                                                        <input type="text" class="form-control" id="target_harian"
-                                                            name="target_harian"
-                                                            value="{{ $monitoring->target_harian }}">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="realisasi" class="form-label">Realisasi</label>
-                                                        <input type="text" class="form-control" id="realisasi"
-                                                            name="realisasi" value="{{ $monitoring->realisasi }}">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Submit</button>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
