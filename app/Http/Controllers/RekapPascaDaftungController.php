@@ -46,34 +46,22 @@ class RekapPascaDaftungController extends Controller
 
     public function administrator(Request $request)
     {
-        // Daftar unit yang ditampilkan
         $unitList = ['ULP Demak', 'ULP Tegowanu', 'ULP Purwodadi', 'ULP Wirosari'];
 
-        // Jika ada filter tanggal
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $data = DB::table('rekap_pascabayar_daftung')
-                ->select(
-                    'unit_ulp_pascabayar',
-                    DB::raw('SUM(realisasi) as total_realisasi'),
-                    DB::raw('MAX(target_bulanan) as target_bulanan'),
-                    DB::raw('MAX(target_mingguan) as target_mingguan'),
-                    DB::raw('MAX(target_harian) as target_harian')
-                )
-                ->whereIn('unit_ulp_pascabayar', $unitList)
-                ->whereBetween(DB::raw('DATE(created_at)'), [
-                    $request->start_date,
-                    $request->end_date
-                ])
+        if (($request->start_date) && ($request->end_date)) {
+            $data = DB::table('rekap_pascabayar_daftung')->select(
+                'unit_ulp_pascabayar',
+                DB::raw('SUM(realisasi) as total_realisasi'),
+                DB::raw('MAX(target_bulanan) as target_bulanan'),
+                DB::raw('MAX(target_mingguan) as target_mingguan'),
+                DB::raw('MAX(target_harian) as target_harian'),
+            )->whereIn('unit_ulp_pascabayar', $unitList)
+                ->whereBetween(DB::raw('DATE(created_at)'), [$request->start_date, $request->end_date])
                 ->groupBy('unit_ulp_pascabayar')
                 ->get();
-
             $useGroup = true; // penanda untuk view
-        } else {
-            // Tampilkan semua data default (tanpa akumulasi)
-            $data = DB::table('rekap_pascabayar_daftung')
-                ->whereIn('unit_ulp_pascabayar', $unitList)
-                ->get();
-
+        } else{
+            $data = DB::table('rekap_pascabayar_daftung')->get();
             $useGroup = false;
         }
 

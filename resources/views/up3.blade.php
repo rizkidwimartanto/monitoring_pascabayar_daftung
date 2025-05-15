@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.dataTables.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
@@ -80,78 +82,39 @@
             <button type="submit" class="btn btn-primary mb-3" id="filter">Filter</button>
         </form>
 
-        <table class="table table-hover table-bordered table-info mt-4">
-            <tr>
-                <th>Unit ULP Pascabayar</th>
-                <th>Target Bulanan</th>
-                <th>Target Mingguan</th>
-                <th>Target Harian</th>
-                <th>Realisasi</th>
-                <th>Pencapaian</th>
-                {{-- <th>Aksi</th> --}}
-            </tr>
-            @foreach ($data as $monitoring)
+        <table class="table table-hover table-bordered table-info mt-4" id="rekap_pascabayar">
+            <thead>
                 <tr>
-                    <td>{{ $monitoring->unit_ulp_pascabayar }}</td>
-                    <td>{{ $monitoring->target_bulanan }}</td>
-                    <td>{{ $monitoring->target_mingguan }}</td>
-                    <td>{{ $monitoring->target_harian }}</td>
-                    <td>
-                        {{ $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi }}
-                    </td>
-                    <td>
-                        @php
-                            $realisasi = $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi;
-                            $targetHarian = $monitoring->target_harian;
-                        @endphp
-                        {{ $targetHarian > 0 ? number_format(($realisasi / $targetHarian) * 100, 2, ',', '.') . '%' : '0%' }}
-                    </td>
-
-                    {{-- <td>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#{{ $monitoring->id }}">
-                            Edit
-                        </button>
-
-                        <div class="modal fade" id="{{ $monitoring->id }}" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="{{ route('rekap-pascadaftung.edit', $monitoring->id) }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <div class="modal-header">
-                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label for="target_bulanan" class="form-label">Target Carry
-                                                    Over</label>
-                                                <input type="text" class="form-control" id="target_bulanan"
-                                                    name="target_bulanan" value="{{ $monitoring->target_bulanan }}">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="target_harian" class="form-label">Target Harian</label>
-                                                <input type="text" class="form-control" id="target_harian"
-                                                    name="target_harian" value="{{ $monitoring->target_harian }}">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </td> --}}
+                    <th>Unit ULP Pascabayar</th>
+                    <th>Target Bulanan</th>
+                    <th>Target Mingguan</th>
+                    <th>Target Harian</th>
+                    <th>Realisasi</th>
+                    <th>Pencapaian</th>
                 </tr>
-            @endforeach
+            </thead>
+            <tbody>
+                @foreach ($data as $monitoring)
+                    <tr>
+                        <td>{{ $monitoring->unit_ulp_pascabayar }}</td>
+                        <td>{{ $monitoring->target_bulanan }}</td>
+                        <td>{{ $monitoring->target_mingguan }}</td>
+                        <td>{{ $monitoring->target_harian }}</td>
+                        <td>
+                            {{ $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi }}
+                        </td>
+                        <td>
+                            @php
+                                $realisasi = $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi;
+                                $targetHarian = $monitoring->target_harian;
+                            @endphp
+                            {{ $targetHarian > 0 ? number_format(($realisasi / $targetHarian) * 100, 2, ',', '.') . '%' : '0%' }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
+
     </div>
     {{-- <div class="container">
         <h2 class="text-center font-bold mt-5">Monitoring Daftung UP3 Grobogan Tahun 2025</h2>
@@ -172,6 +135,14 @@
             @endforeach
         </table>
     </div> --}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#rekap_pascabayar').DataTable();
+        });
+    </script>
     @if (session('success'))
         <script>
             Swal.fire({
