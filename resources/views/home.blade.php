@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="icon" href="{{asset('public/img/Logo_PLN.png')}}">
+    <link rel="icon" href="{{ asset('public/img/Logo_PLN.png') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <title>Input Pascabayar UP3 Grobogan Tahun 2025</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg" style="background: #08B1F0">
         <div class="container">
-            <a class="navbar-brand" href="/monitoring_pascabayar_daftung/">SARPP UP3 Grobogan</a>
+            <a class="navbar-brand text-light" href="/monitoring_pascabayar_daftung/">SARPP UP3 Grobogan</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -23,10 +24,11 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/monitoring_pascabayar_daftung/administrator" id="up3">UP3</a>
+                        <a class="nav-link text-light" href="/monitoring_pascabayar_daftung/administrator"
+                            id="up3">UP3</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/monitoring_pascabayar_daftung/" id="ulp">ULP</a>
+                        <a class="nav-link text-light" href="/monitoring_pascabayar_daftung/" id="ulp">ULP</a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +66,7 @@
                 <input type="text" class="form-control" id="realisasi" name="realisasi">
             </div>
             <div class="d-grid gap-2">
-                <button class="btn btn-primary mb-4" type="submit">Kirim</button>
+                <button class="btn btn-success mb-4" type="submit">Submit</button>
             </div>
         </div>
     </form>

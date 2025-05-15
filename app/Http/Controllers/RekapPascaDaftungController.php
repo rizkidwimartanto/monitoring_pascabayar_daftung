@@ -105,12 +105,14 @@ class RekapPascaDaftungController extends Controller
             'target_bulanan' => 'nullable|string|max:255',
             'target_mingguan' => 'nullable|string|max:255',
             'target_harian' => 'nullable|string|max:255',
+            'realisasi' => 'nullable|string|max:255',
         ]);
 
         $monitoring = RekapPascaDaftungModel::findOrFail($id);
         $monitoring->target_bulanan = $request->target_bulanan;
         $monitoring->target_mingguan = $request->target_mingguan;
         $monitoring->target_harian = $request->target_harian;
+        $monitoring->realisasi = $request->realisasi;
         $monitoring->save();
 
         return redirect()->back()->with('success', 'Data berhasil diperbarui.');
