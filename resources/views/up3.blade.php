@@ -165,6 +165,13 @@
                                                                 value="{{ $monitoring->target_harian }}">
                                                         </div>
                                                         <div class="mb-3">
+                                                            <label for="tanggal_realisasi"
+                                                                class="form-label">Tanggal Realisasi</label>
+                                                            <input type="date" class="form-control" id="tanggal_realisasi"
+                                                                name="tanggal_realisasi"
+                                                                value="{{ $monitoring->tanggal_realisasi }}">
+                                                        </div>
+                                                        <div class="mb-3">
                                                             <label for="realisasi"
                                                                 class="form-label">Realisasi</label>
                                                             <input type="text" class="form-control" id="realisasi"
