@@ -108,7 +108,11 @@
                             <td>{{ $monitoring->target_bulanan }}</td>
                             <td>{{ $monitoring->target_mingguan }}</td>
                             <td>{{ $monitoring->target_harian }}</td>
-                            <td>{{ \Carbon\Carbon::parse($monitoring->tanggal_realisasi)->translatedFormat('d F Y') }}</td>
+                            <td>
+                                @if ($monitoring->tanggal_realisasi)
+                                    {{ \Carbon\Carbon::parse($monitoring->tanggal_realisasi)->translatedFormat('d F Y') }}
+                                @endif
+                            </td>
                             <td>
                                 {{ $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi }}
                             </td>
