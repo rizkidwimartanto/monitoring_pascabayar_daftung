@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('target_bulanan')->nullable();
             $table->string('target_mingguan')->nullable();
             $table->string('target_harian')->nullable();
+            $table->string('tanggal_realisasi')->nullable();
             $table->string('realisasi')->nullable();
             $table->string('persen_pencapaian')->nullable();
             $table->string('unit_ulp_daftung')->nullable();

@@ -95,6 +95,7 @@
                         <th>Target Bulanan</th>
                         <th>Target Mingguan</th>
                         <th>Target Harian</th>
+                        <th>Tanggal Realisasi</th>
                         <th>Realisasi</th>
                         <th>Pencapaian</th>
                         <th>Aksi</th>
@@ -107,6 +108,7 @@
                             <td>{{ $monitoring->target_bulanan }}</td>
                             <td>{{ $monitoring->target_mingguan }}</td>
                             <td>{{ $monitoring->target_harian }}</td>
+                            <td>{{ \Carbon\Carbon::parse($monitoring->tanggal_realisasi)->translatedFormat('d F Y') }}</td>
                             <td>
                                 {{ $useGroup ? $monitoring->total_realisasi : $monitoring->realisasi }}
                             </td>

@@ -121,6 +121,7 @@ class RekapPascaDaftungController extends Controller
     {
         $request->validate([
             'unit_ulp_pascabayar' => 'nullable|required|string|max:255',
+            'tanggal_realisasi' => 'nullable|string|max:255',
             'realisasi' => 'nullable|string|max:255',
             'persen_pencapaian' => 'nullable|string|max:255',
             'unit_ulp_daftung' => 'nullable|string|max:255',
@@ -128,6 +129,7 @@ class RekapPascaDaftungController extends Controller
             'cetak_pk_pagi' => 'nullable|string|max:255',
             'cetak_pk_siang' => 'nullable|string|max:255',
             'jumlah_peremajaan' => 'nullable|string|max:255',
+            'updated_at' => 'nullable|string|max:255',
         ]);
 
         $unit = $request->unit_ulp_pascabayar;
@@ -144,6 +146,7 @@ class RekapPascaDaftungController extends Controller
 
         // Update data
         $rekap->update([
+            'tanggal_realisasi' => $request->tanggal_realisasi,
             'realisasi' => $request->realisasi,
             'persen_pencapaian' => $request->persen_pencapaian,
             'unit_ulp_daftung' => $request->unit_ulp_daftung,
@@ -151,6 +154,7 @@ class RekapPascaDaftungController extends Controller
             'cetak_pk_pagi' => $request->cetak_pk_pagi,
             'cetak_pk_siang' => $request->cetak_pk_siang,
             'jumlah_peremajaan' => $request->jumlah_peremajaan,
+            'updated_at' => $request->updated_at,
         ]);
 
         return redirect()->route('rekap-pascadaftung.index')->with('success', 'Data berhasil diperbarui.');

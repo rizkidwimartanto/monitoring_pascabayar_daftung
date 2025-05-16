@@ -12,6 +12,7 @@ class RekapPascaDaftungModel extends Model
         'target_bulanan',
         'target_mingguan',
         'target_harian',
+        'tanggal_realisasi',
         'realisasi',
         'persen_pencapaian',
         'unit_ulp_daftung',
