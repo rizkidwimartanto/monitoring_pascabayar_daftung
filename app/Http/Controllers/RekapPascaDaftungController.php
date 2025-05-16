@@ -56,7 +56,7 @@ class RekapPascaDaftungController extends Controller
                 DB::raw('MAX(target_mingguan) as target_mingguan'),
                 DB::raw('MAX(target_harian) as target_harian'),
             )->whereIn('unit_ulp_pascabayar', $unitList)
-                ->whereBetween(DB::raw('DATE(created_at)'), [$request->start_date, $request->end_date])
+                ->whereBetween(DB::raw('DATE(tanggal_realisasi)'), [$request->start_date, $request->end_date])
                 ->groupBy('unit_ulp_pascabayar')
                 ->get();
             $useGroup = true; // penanda untuk view

@@ -95,7 +95,11 @@
                         <th>Target Bulanan</th>
                         <th>Target Mingguan</th>
                         <th>Target Harian</th>
-                        <th>Tanggal Realisasi</th>
+                        <th>
+                            @if (!$useGroup)
+                                Tanggal Realisasi
+                            @endif
+                        </th>
                         <th>Realisasi</th>
                         <th>Pencapaian</th>
                         <th>Aksi</th>
@@ -109,8 +113,10 @@
                             <td>{{ $monitoring->target_mingguan }}</td>
                             <td>{{ $monitoring->target_harian }}</td>
                             <td>
-                                @if ($monitoring->tanggal_realisasi)
-                                    {{ \Carbon\Carbon::parse($monitoring->tanggal_realisasi)->translatedFormat('d F Y') }}
+                                @if (!$useGroup)
+                                    @if ($monitoring->tanggal_realisasi)
+                                        {{ \Carbon\Carbon::parse($monitoring->tanggal_realisasi)->translatedFormat('d F Y') }}
+                                    @endif
                                 @endif
                             </td>
                             <td>
@@ -165,10 +171,10 @@
                                                                 value="{{ $monitoring->target_harian }}">
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label for="tanggal_realisasi"
-                                                                class="form-label">Tanggal Realisasi</label>
-                                                            <input type="date" class="form-control" id="tanggal_realisasi"
-                                                                name="tanggal_realisasi"
+                                                            <label for="tanggal_realisasi" class="form-label">Tanggal
+                                                                Realisasi</label>
+                                                            <input type="date" class="form-control"
+                                                                id="tanggal_realisasi" name="tanggal_realisasi"
                                                                 value="{{ $monitoring->tanggal_realisasi }}">
                                                         </div>
                                                         <div class="mb-3">
